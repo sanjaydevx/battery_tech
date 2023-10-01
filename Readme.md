@@ -19,3 +19,5 @@ The Julia model was then subjected to hyperparameter tuning to further optimize 
 A decay was introduced in the learning rate and the batch size was varied. The ideal batch size was experimentally found to be 32 and the decay beta1 and beta2 rates found to be 0.9 and 0.95. 
 
 This improved the accuracy of the model with error stats as shown below
+
+![Stats](https://github.com/sanjaydevx/battery_tech/raw/master/images/stats.png)

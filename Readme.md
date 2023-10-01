@@ -20,4 +20,4 @@ A decay was introduced in the learning rate and the batch size was varied. The i
 
 This improved the accuracy of the model with error stats as shown below
 
-![Stats](https://github.com/sanjaydevx/battery_tech/raw/master/images/stats.png)
+![Stats](https://github.com/sanjaydevx/battery_tech/blob/main/images/stats.png)

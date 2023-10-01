@@ -22,9 +22,6 @@ filetest_4 = DataFrame(V = [], I = [], Temperature = [], Capacity = [], Energy =
 data_train = DataFrame(V = [], I = [], Temperature = [], Capacity = [], Energy = [], SOC = [])
 Error = DataFrame(File = [], Max = [],Mean = [],RMSE = [])
 
-#Global Variables 
-
-model = 0
 
 #Opening and reading MAT files for testing
 
@@ -70,40 +67,35 @@ function openmatfiles_train!()
     y_train =  transpose(y_train)
 end
 
+#0.01,0.9,0.95
+opt = Flux.Optimise.ADAM(0.01,(0.9, 0.95), eps(typeof(0.01)))
 
-#Defining Architecture and Parameters
 
-function define_parameters!(num_hidden_units,first_layer,last_layer,batch_size,initial_learningrate,decay1, decay2)
+#Defining Architecture and Parameters, Loading data and training the model
 
-    model = Chain(
+function define_parameters!(num_hidden_units,first_layer,last_layer,data_input,data_output,batch)
+
+    global model = Chain(
                     Dense(first_layer, num_hidden_units, tanh),
                     Dense(num_hidden_units, num_hidden_units, leakyrelu),
                     Dense(num_hidden_units, last_layer)
                 )
 
-    opt = Flux.Optimise.ADAM(initial_learningrate,(decay1, decay2), eps(typeof(initial_learningrate)))
-
-    batch_size = batch_size
-end
-
-#Loss function
-
-function loss()
     loss(x, y) = Flux.mse(model(x), y)
-end
-
-
-#Loading data and training the model
-
-function train!(epochs,data_input,data_output,batch_size,opt)
-    local dataset = Flux.Data.DataLoader((data_input,data_output), batchsize = batch_size, shuffle=true)
+    
+    local dataset = Flux.Data.DataLoader((data_input,data_output), batchsize = batch, shuffle=true)
     local parameters = Flux.params(model)
 
     for i in 1:epochs
+
         Flux.train!(loss, parameters, dataset, opt)
         println("Epoch "*string(i))
     end
 end
+
+print("done")
+
+print(1)
 
 #Testing 
 
@@ -149,26 +141,20 @@ function testing!(testing_file)
 
 end
 
+print(2)
+
 function main()
 
     local x_train = []
     local y_train = []
-    local batch_size = 0
-    local opt = 0
 
     #Call function to open test and train files
     openmatfiles_test!()
     openmatfiles_train!()
 
-
     #Call function to define parameters and hyperparameters
-    define_parameters!(55,5,1,32,0.01,0.9,0.95)
+    define_parameters!(55,5,1,x_train,y_train,32)
 
-    #Call function to define loss function
-    loss()
-
-    #Call function to train model on a number of epochs
-    train!(1,x_train,y_train,batch_size,opt)
 
     #Call file for testing
     testing!(filetest_1)
@@ -181,6 +167,8 @@ function main()
     println(Error)
 
 end
+
+print(3)
 
 main()
 

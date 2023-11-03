@@ -12,6 +12,12 @@ The model is a regression model with one output, the SOC. It consists of 3 layer
 
 This yielded error percentages (mean error, max error and RMSE) marginally lower than the MATLAB model.
 
+The model can be accessed in the 'src/neural.jl' file. 
+The model has been set to train with 3 repetitions of 50 epochs. 
+The error stats displayed are with the same configuration. The error stats will be printed out as a dataframe.
+
+To change any hyperparameters, change values while calling the 'define_parameters!' function. 
+
 ## Hyperparameter Tuning 
 
 The Julia model was then subjected to hyperparameter tuning to further optimize the accuracy in predictions. 

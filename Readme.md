@@ -1,6 +1,6 @@
 ## About
 This project is a collection of source code artifacts related to Battery Management Systems (BMS).
-Has a port of MATLAB model to Julia. The MATLAB model has used two battery training datasets, one for Li-ion and one for a NMC cell.
+The SOC Predictor was inspired by a MATLAB model developed at McMaster. The MATLAB model has used two battery training datasets, one for Li-ion and one for a NMC cell.
 
 The MATLAB model used can be found here - https://www.sae.org/publications/technical-papers/content/2020-01-1181/
 
